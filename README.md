@@ -1,12 +1,10 @@
-# Snake game in SFML
+# Chip8 Emulator inC++
 ![](https://img.shields.io/badge/made%20by-DarienMiller-blue)
 ![](https://img.shields.io/badge/C++-yellow)
 
-### Screenshot from the game.
-<img width="524" alt="image1" src="https://user-images.githubusercontent.com/32966645/221610520-305317c1-ad64-4444-84c0-631784a7d23c.png">
+### Screenshot of emulator testing.
 
 ### Short recording of game in play.
-![snakegif](https://user-images.githubusercontent.com/32966645/221616513-b396eca1-9c6a-4186-b873-e92477a001f6.gif)
 
 ### Built with
 * [C++](https://cplusplus.com/)

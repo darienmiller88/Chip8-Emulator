@@ -1,84 +1,79 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "Snake.h"
-
+#include <random>
+#include <array>
+#include "Chip8.h"
+#include <SFML/Graphics.hpp>
 using namespace sf;
 
-void printGrid(Sprite &grayBlock, RenderWindow &window);
-void placeFood(Sprite &food);
+const int CHIP8_WINDOW_WIDTH = 64;
+const int CHIP8_WINDOW_HEIGHT = 32;
+const float SCALE = 20;//The window will be X times bigger than the original 64x32 window.
 
-//Number of rows and columns in the game
-constexpr int NUM_COLUMNS = 35, NUM_ROWS = 25;
-
-//How wide/tall each square in each row and column are.
-const int ROW_COLUMN_SIZE = 30;
-
-//Calculate window width and height from the number of rows and column multiplied by how wide they are.
-const int WINDOW_WIDTH = NUM_COLUMNS * ROW_COLUMN_SIZE, WINDOW_HEIGHT = NUM_ROWS * ROW_COLUMN_SIZE;
+void fillWindow(RenderWindow &window, const std::array<int, 64 * 32> &graphics);
+void initializeArray(std::array<int, 64 * 32> &graphics);
 
 int main(){
+	using namespace std;
+
+	// uint8_t num = 1;
+	// uint16_t opcode = (num << 8) | 1; 
+	// cout << "opcode: " << opcode << "\n";
+	// uint16_t res = opcode & 0xF000;
+	// cout << "res: " << res << "\n";
+
 	srand(time(nullptr));
-    RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Snake!", sf::Style::Close | sf::Style::Titlebar);
-	Texture foodTexture, grayBlockTexture;
 
-	foodTexture.loadFromFile("sprites/greenblock.png");
-	grayBlockTexture.loadFromFile("sprites/grayblock.png");
+    RenderWindow window(
+		VideoMode(CHIP8_WINDOW_WIDTH * SCALE, CHIP8_WINDOW_HEIGHT * SCALE), 
+		"Chip8", 
+		sf::Style::Close | sf::Style::Titlebar
+	);
+	Chip8 chip8;
+	array<int, 64 * 32> graphics;       
 
-	Sprite food(foodTexture), grayBlock(grayBlockTexture);
-	Snake s1(4, ROW_COLUMN_SIZE);
+	//Load Chip-8 ROM
+	chip8.loadRom("./roms/programs/IBM Logo.ch8");
+	initializeArray(graphics);
+	uint16_t opcode = 1 << 8 | 1;
+	std::cout << "opcode main: " << opcode << "\n";
+	std::cout << "shifted: " << (opcode & 0x0FFF) << "\n";
+	// while (window.isOpen()) {
+	// 	Event e;
 
-	//resize the sprite to half of its size original size.
-	food.setScale(ROW_COLUMN_SIZE / food.getGlobalBounds().width, ROW_COLUMN_SIZE / food.getGlobalBounds().height);
-	grayBlock.setScale(ROW_COLUMN_SIZE / grayBlock.getGlobalBounds().width, ROW_COLUMN_SIZE / grayBlock.getGlobalBounds().height);
+	// 	while (window.pollEvent(e)) {
+	// 		if (e.type == sf::Event::Closed)
+	// 			window.close();
+	// 	}
 
-	Clock clock;
-	float timer = 0.f, delay = 0.3f;
-	window.setFramerateLimit(15);
-	placeFood(food);
-	while (window.isOpen()) {
-		float time = clock.getElapsedTime().asSeconds();
-		clock.restart();
-		timer += time; 
-		
-		sf::Event e;
-		while (window.pollEvent(e)) {
-			if (e.type == sf::Event::Closed)
-				window.close();
-		}
- 
-		s1.controlSnake(ROW_COLUMN_SIZE);
-		s1.updateSnake(WINDOW_WIDTH - ROW_COLUMN_SIZE, WINDOW_HEIGHT - ROW_COLUMN_SIZE);
+	// 	//CPU cycle
+		chip8.cpuCycle();
 
-		//Handle snake controls, and update its position by passing in the window boundaries.
-		//Check to see if the snake ate the food, and if so, the snake will grow.
-		if (s1.eat(food.getPosition())){
-			placeFood(food);
-			std::cout << "food position x: " << food.getPosition().x  << " and y: " << food.getPosition().y << "\n";
-		}
-		
-		s1.resetSnake();
+	// 	//Handle Chip-8
 
-		window.clear();
-		printGrid(grayBlock, window);
-		s1.drawSnake(window);
-		window.draw(food);
-		window.display();
+	// 	window.clear();
+	// 	fillWindow(window, graphics);
+	// 	window.display();
+	// }
+}
+
+void initializeArray(std::array<int, 64 * 32> &graphics){
+	for (int i = 0; i < graphics.size(); i++){
+		graphics[i] = rand() % 2;
 	}
 }
+ 
+void fillWindow(RenderWindow &window, const std::array<int, 64 * 32> &graphics){
+	int index = 0;
 
-void placeFood(Sprite &food){
-	int x = rand() % (NUM_COLUMNS - 1) * ROW_COLUMN_SIZE;
-	int y = rand() % (NUM_ROWS - 1)    * ROW_COLUMN_SIZE;
-	
-	food.setPosition(x, y);
-}
-
-void printGrid(Sprite &grayBlock, RenderWindow &window){
-	for (int i = 0; i < NUM_ROWS; i++){
-		for (int j = 0; j < NUM_COLUMNS; j++){
-			grayBlock.setPosition(j * ROW_COLUMN_SIZE, i * ROW_COLUMN_SIZE);
-			window.draw(grayBlock);
-		}
+	for (int i = 0; i < CHIP8_WINDOW_HEIGHT; i++){
+		for (int j = 0; j < CHIP8_WINDOW_WIDTH; j++){
+			RectangleShape rect({SCALE, SCALE});
+			
+			(graphics[++index] == 1) ? rect.setFillColor(Color::Black) : rect.setFillColor(Color::White);
+			rect.setPosition({j * SCALE, i * SCALE});
+			window.draw(rect);
+		}		
 	}
 }
