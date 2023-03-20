@@ -4,7 +4,8 @@
 
 ### Screenshot of emulator testing.
 
-### List of compatible games.
+
+### List of compatible games that seem to function.
 
 ### Built with
 * [C++](https://cplusplus.com/)
@@ -16,7 +17,7 @@
 #### This repo comes with a pre-compiled .exe ready to run, but in the case of wanting to re-compile for your respective system, follow the below instructions.
 
 #### Windows
-* Clone the repository using `git clone https://github.com/darienmiller88/Snake-SFML`
+* Clone the repository using `git clone https://github.com/darienmiller88/Chip8-Emulator`
 * Navigate to `https://www.mingw-w64.org/` and download a 64-bit Mingw complier to compile C++ programs.
 * In your cloned repo, run the command `g++ -c *.cpp -I./include` to compile cpp files.
 * Afterwards, run `g++ -o main *.o -L./lib -lsfml-graphics -lsfml-window -lsfml-system` to link object files.

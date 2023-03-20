@@ -5,6 +5,7 @@
 #include <array>
 #include <stack>
 #include <string>
+#include <random>
 
 class Chip8{
     public:
@@ -22,11 +23,20 @@ class Chip8{
         //
         //3. Execute - Execute the instruction asccociated with each specific opcode.
         void cpuCycle();
+        void handleKeyClick(const sf::Event &e);
+        void handleKeyRelease(const sf::Event &e);
 
         //Drawing the spirtes, will add more comments later
-        void drawSprites();
+        void drawSprites(sf::RenderWindow &window, float pixelWidth);
+        
     private:
-        bool printFlag;
+        bool drawFlag;
+
+        const int CHIP8_WINDOW_WIDTH = 64, CHIP8_WINDOW_HEIGHT = 32;
+
+        //Array to store which hex key is currently being pressed. Really only used for opcode 0xFx0A.
+        std::array<bool, 16> keyStates;
+
         //memory - Memory to be used for the Chip-8 ROMs. According to the documentation, the original 
         //Chip-8 virtual machines ran on machines that only had 4KB of space, with each slot in memory holding
         //8 bits. The first 512 spots in the array, 0(0x00) - 511(0X1FF) were reserved for the intepreter itself, 
@@ -34,7 +44,7 @@ class Chip8{
         //the Chip-8 fonts.
         std::array<uint8_t, 4096> memory;        
 
-        //registers - The Chip-8 emulator will make use of 16, 8-bit registers to "V0" to "VF". VF is the 
+        //registers - The Chip-8 emulator will make use of 16, 8-bit data registers to "V0" to "VF". VF is the 
         //carry flag and thus will not be used.
         std::array<uint8_t, 16> registers;
 
@@ -53,7 +63,9 @@ class Chip8{
 
         //keyMapping - This variable will map the keys on modern keys to the hex keys on older machines running
         //Chip-8 intrepreters. 
-        std::unordered_map<sf::Keyboard::Key, uint16_t> keyMapping;
+        std::unordered_map<sf::Keyboard::Key, uint8_t> keyMapping;
+
+        std::unordered_map<char, uint8_t> charKeyMapping;
 
         //delayTimer - This timer is intended to be used for timing the events of games. Its value can be
         //set and read, which will be done during the execution phase.
@@ -62,7 +74,7 @@ class Chip8{
         //soundTimer - This timer is used for sound effects. When its value is nonzero, a beeping sound is made.
         uint8_t soundTimer;
 
-        //indexRegister - this is a 16-bit value to store the memory addresses. Only 12 bits will be used. 
+        //indexRegister - this is a 16-bit value to store memory addresses. Only 12 bits will be used. 
         uint16_t indexRegister;
 
         //The program counter will be used to point at the memory index currently being used.
@@ -70,7 +82,13 @@ class Chip8{
 
         //opcode - This variable is a 16-bit vlaue that will be used to store the opcodes retrieved from memory.
         uint16_t opcode;
+        
+        //rombufferSize - This will represent how big the rom is, i.e. How many slots in memory the it takes up.
+        int rombufferSize;
 
-        //stackPointer - Likewise, we need a stack pointer to remember which level in the stack was last used.
-        uint16_t stackPointer;
+        sf::Keyboard::Key currentKey;
+
+        //C++ random number generation is atrocious lol.
+        std::random_device seed;
+		std::default_random_engine rnGen;
 };
