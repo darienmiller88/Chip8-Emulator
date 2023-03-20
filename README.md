@@ -3,6 +3,10 @@
 ![](https://img.shields.io/badge/C++-yellow)
 
 ### Screenshot of emulator testing.
+<img width="644" alt="test opcode" src="https://user-images.githubusercontent.com/32966645/226221749-b5fe5994-52c3-4710-a32b-6289960d673d.png">
+<img width="640" alt="pong" src="https://user-images.githubusercontent.com/32966645/226221771-4089dad9-6424-476b-b872-d764bb069b4a.png">
+<img width="639" alt="fishie" src="https://user-images.githubusercontent.com/32966645/226221793-b3824097-1fbb-4b3b-9ca3-dcc7ae1e05c8.png">
+<img width="642" alt="ex1" src="https://user-images.githubusercontent.com/32966645/226221804-da1a30f1-eb59-446a-a6cd-6ce255cf2f8c.png">
 
 ### List of compatible games.
 
