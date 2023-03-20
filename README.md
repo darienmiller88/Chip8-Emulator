@@ -8,6 +8,20 @@
 <img width="639" alt="fishie" src="https://user-images.githubusercontent.com/32966645/226221793-b3824097-1fbb-4b3b-9ca3-dcc7ae1e05c8.png">
 <img width="642" alt="ex1" src="https://user-images.githubusercontent.com/32966645/226221804-da1a30f1-eb59-446a-a6cd-6ce255cf2f8c.png">
 
+### Game recordings
+
+#### Tetris
+![tetris](https://user-images.githubusercontent.com/32966645/226222657-3ae7b431-52a5-4477-936c-5f561605f3e1.gif)
+
+#### Pong
+![pong](https://user-images.githubusercontent.com/32966645/226222739-c892ea7b-ccc3-4c6e-b563-1875475db264.gif)
+
+#### Keypad
+![keypad](https://user-images.githubusercontent.com/32966645/226222729-945dfa82-bb59-4e3f-b71f-9e1cf6ffb296.gif)
+
+#### Breakout
+![breakout](https://user-images.githubusercontent.com/32966645/226222709-40a2a1e8-aa7e-426f-8c84-e5407ee6a49a.gif)
+
 
 ### List of compatible games that seem to function.
 
