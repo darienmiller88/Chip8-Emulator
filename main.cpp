@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <random>
 #include <array>
+#include <unordered_map>
+#include <functional>
 #include <SFML/Graphics.hpp>
 #include "Chip8.h"
 using namespace sf;
@@ -12,10 +14,6 @@ const int CHIP8_WINDOW_HEIGHT = 32;
 const float SCALE = 20;//The window will be SCLAE times bigger than the original 64x32 window.
 
 int main(int argc, char *argv[]){
-	using namespace std;
-
-	std::cout << "num args: " << argc << "\n";
-
     RenderWindow window(
 		VideoMode(CHIP8_WINDOW_WIDTH * SCALE, CHIP8_WINDOW_HEIGHT * SCALE), 
 		"Darien Miller - Chip8", 
@@ -24,7 +22,7 @@ int main(int argc, char *argv[]){
 	Chip8 chip8;
 	
 	//Load Chip-8 ROM
-	chip8.loadRom("./roms/" + string(argv[1]));	
+	chip8.loadRom("./roms/" + std::string(argv[1]));	
 	// window.setFramerateLimit(60);
 	while (window.isOpen()) {
 		Event e;
@@ -39,8 +37,7 @@ int main(int argc, char *argv[]){
 				chip8.handleKeyRelease(e);
 			}
 		}
-
-		//CPU cycle
+		
 		chip8.cpuCycle();
 
 		window.clear();

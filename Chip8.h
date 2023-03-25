@@ -6,6 +6,8 @@
 #include <stack>
 #include <string>
 #include <random>
+#include <functional>
+#include "Opcodes.hpp"
 
 class Chip8{
     public:
@@ -30,9 +32,8 @@ class Chip8{
         void drawSprites(sf::RenderWindow &window, float pixelWidth);
         
     private:
-        bool drawFlag;
-
-        const int CHIP8_WINDOW_WIDTH = 64, CHIP8_WINDOW_HEIGHT = 32;
+        //Instance of the opcode class where each operation function will be located. I might move them back here lol.
+        Opcodes opcodes;
 
         //Array to store which hex key is currently being pressed. Really only used for opcode 0xFx0A.
         std::array<bool, 16> keyStates;
@@ -65,7 +66,8 @@ class Chip8{
         //Chip-8 intrepreters. 
         std::unordered_map<sf::Keyboard::Key, uint8_t> keyMapping;
 
-        std::unordered_map<char, uint8_t> charKeyMapping;
+        //Opcodes executions will be mapped to their respective opcode hexadecimal.
+        std::unordered_map<uint8_t, std::function<void()>> opcodeMapping;
 
         //delayTimer - This timer is intended to be used for timing the events of games. Its value can be
         //set and read, which will be done during the execution phase.
