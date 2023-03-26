@@ -23,7 +23,9 @@
 ![breakout](https://user-images.githubusercontent.com/32966645/226222709-40a2a1e8-aa7e-426f-8c84-e5407ee6a49a.gif)
 
 
-### List of compatible games that seem to function.
+### How to run Chip-8 roms:
+`./<executable-name.exe> <rom-folder-name>/<chip8rom.ch8>`
+Ex. `./main "games/Tetris [Fran Dachille, 1991].ch8" `
 
 ### Built with
 * [C++](https://cplusplus.com/)
@@ -40,7 +42,7 @@
 * In your cloned repo, run the command `g++ -c *.cpp -I./include` to compile cpp files.
 * Afterwards, run `g++ -o main *.o -L./lib -lsfml-graphics -lsfml-window -lsfml-system` to link object files.
 * Alternatively, you can include both commands in your local `Makefile` and run `mingw32-make` to complete both. 
-* Finally, run `./main` to run the program. 
+* Finally, run `./main <rom-folder-name>/<chip8rom.ch8>` to run the program. 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
